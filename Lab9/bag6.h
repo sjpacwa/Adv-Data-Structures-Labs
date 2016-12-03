@@ -110,17 +110,21 @@ namespace scu_coen70_10
         assert(root_ptr != NULL);
         
         if(root_ptr->right() == NULL) {
+            // there are no items to the right of this node, therefore it is the max
             removed = Item(root_ptr->data());
             bst_remove(root_ptr, root_ptr->data());
             return;
         }
         
         if (root_ptr->right()->is_leaf()) {
+            //right child is the max
             removed = Item(root_ptr->right()->data());
             bst_remove(root_ptr, root_ptr->right()->data());
             return;
         }
         
+        // there is a node to the right (so it is greater than this one)
+        // recurse to the right child of this node
         bst_remove_max(root_ptr->right(), removed);
     }
     
@@ -162,9 +166,6 @@ namespace scu_coen70_10
         if (root_ptr->left( ) == NULL)
         {   // Target was found and there is no left subtree, so we can
             // remove this node, making the right child be the new root.
-            /*root_ptr->data = root_ptr->right->data;
-            delete root_ptr->right;
-            root_ptr->right = NULL;*/
         
             oldroot_ptr = root_ptr;
             root_ptr = root_ptr->right( );
@@ -286,6 +287,7 @@ namespace scu_coen70_10
             {   // Go left
                 //***STUDENT WORK***
                 if(cursor->left() == NULL) {
+                    // Add node
                     new_node->set_data(entry);
                     cursor->left() = new_node;
                     return;
@@ -296,6 +298,7 @@ namespace scu_coen70_10
             {   // Go right
                 //***STUDENT WORK***
                 if(cursor->right() == NULL) {
+                    // Add node
                     new_node->set_data(entry);
                     cursor->right() = new_node;
                     return;
@@ -316,10 +319,13 @@ namespace scu_coen70_10
         cursor = root_ptr;
         //***STUDENT WORK***
         if(cursor == NULL)
+            // Empty tree
             return 0;
         
+        // Run through all nodes looking for target
         while (cursor != NULL) {
             if(cursor->data() == target) {
+                // current node
                 answer++;
             }
             if(target <= cursor->data() ){
@@ -350,6 +356,7 @@ namespace scu_coen70_10
     {
         //***STUDENT WORK***
         if(this->root_ptr == source.root_ptr)
+            // check for self-assignment
             return;
         
         tree_clear(root_ptr);
